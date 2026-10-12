@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemSim | Interactive COA & Operating Systems Memory Platform</title>
+    <meta name="description" content="Visual, interactive simulator for Computer Organization & Operating Systems memory hierarchy, cache hits/misses, paging, swapping, fragmentation, and address translation.">
+    
+    <!-- Design System Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Protocol Check / CORS Helper Banner (only visible if opened via file://) -->
+    <div id="fileProtocolWarning" style="display:none; background: linear-gradient(90deg, rgba(244,63,94,0.15), rgba(245,158,11,0.15)); border-bottom: 1px solid rgba(244,63,94,0.4); padding: 12px 24px; color: #f8fafc; font-size: 0.88rem; align-items: center; justify-content: space-between; gap: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.2rem;">⚠️</span>
+            <span>
+                <strong>CORS Error (file:// detected):</strong> Modern browsers block ES6 JavaScript modules when double-clicked directly from your filesystem.
+                Please serve via a local server (e.g. run <code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; color: #38bdf8;">python -m http.server 8080</code> or use VS Code Live Server) and open <code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; color: #38bdf8;">http://localhost:8080</code>.
+            </span>
+        </div>
+        <button onclick="document.getElementById('fileProtocolWarning').remove()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; white-space:nowrap;">Dismiss</button>
+    </div>
+    <script>
+        if (window.location.protocol === 'file:') {
+            var warn = document.getElementById('fileProtocolWarning');
+            if (warn) warn.style.display = 'flex';
+        }
+    </script>
+
+    <!-- Header & Navigation -->
+    <header class="app-header">
+        <div class="logo-wrap">
+            <div class="logo-badge">🧠</div>
+            <div class="logo-text">
+                <h1>MemSim Studio</h1>
+                <span>Interactive COA & OS Memory Architecture Platform</span>
+            </div>
+        </div>
+
+        <nav class="tabs-nav" aria-label="Main Navigation">
+            <button class="tab-btn active" data-tab="tab-pipeline">
+                <span>🛣️</span> The Memory Journey
+            </button>
+            <button class="tab-btn" data-tab="tab-cache">
+                <span>⚡</span> Cache Lab (L1/L2)
+            </button>
+            <button class="tab-btn" data-tab="tab-paging">
+                <span>📄</span> Paging & Swapping
+            </button>
+            <button class="tab-btn" data-tab="tab-fragmentation">
+                <span>🧩</span> Fragmentation Lab
+            </button>
+            <button class="tab-btn" data-tab="tab-rom">
+                <span>💾</span> ROM Memory Lab
+            </button>
+            <button class="tab-btn" data-tab="tab-anatomy">
+                <span>📐</span> Bit Anatomy
+            </button>
+            <button class="tab-btn" data-tab="tab-latency">
+                <span>⏳</span> Human-Scale Latency
+            </button>
+            <button class="tab-btn" data-tab="tab-lessons">
+                <span>🎓</span> Masterclass Lessons
+            </button>
+        </nav>
+    </header>
+
+    <!-- Global Quick Access Bar -->
+    <div class="quick-control-bar">
+        <div class="input-pill-group">
+            <label for="quickAddressInput">Virtual Address (Hex):</label>
+            <input type="text" id="quickAddressInput" class="hex-input" value="0x00401000" spellcheck="false" />
+        </div>
+        <div class="btn-group">
+            <button id="btnQuickStep" class="lab-btn btn-primary">⚡ Step Access</button>
+            <button id="btnQuickRandom" class="lab-btn">🎲 Random Address</button>
+            <button id="btnQuickPreset" class="lab-btn btn-success">▶ Run Preset Trace (Loop)</button>
+            <button id="btnQuickReset" class="lab-btn">↺ Reset System</button>
+        </div>
+    </div>
+
+    <!-- MAIN VIEWS -->
+    <main id="mainAppContent">
+
+        <!-- TAB 1: Pipeline & Journey -->
+        <section id="tab-pipeline" class="tab-pane active">
+            <div class="pipeline-grid">
+                <!-- Left: Interactive Hardware Datapath -->
+                <div id="pipelineDatapathContainer"></div>
+
+                <!-- Right: Detective Narrator Panel -->
+                <aside id="narratorContainer" class="narrator-pane"></aside>
+            </div>
+        </section>
+
+        <!-- TAB 2: Cache Lab -->
+        <section id="tab-cache" class="tab-pane">
+            <div id="cacheLabContainer"></div>
+        </section>
+
+        <!-- TAB 3: Virtual Memory & Paging -->
+        <section id="tab-paging" class="tab-pane">
+            <div id="pagingLabContainer"></div>
+        </section>
+
+        <!-- TAB 4: Allocation & Fragmentation -->
+        <section id="tab-fragmentation" class="tab-pane">
+            <div id="fragmentationLabContainer"></div>
+        </section>
+
+        <!-- TAB ROM: Semiconductor ROM Lab -->
+        <section id="tab-rom" class="tab-pane">
+            <div id="romLabContainer"></div>
+        </section>
+
+        <!-- TAB 5: Bit Anatomy Calculator -->
+        <section id="tab-anatomy" class="tab-pane">
+            <div id="bitAnatomyContainer"></div>
+        </section>
+
+        <!-- TAB 6: Human-Scale Latency Comparison -->
+        <section id="tab-latency" class="tab-pane">
+            <div id="latencyLabContainer"></div>
+        </section>
+
+        <!-- TAB 7: Guided Masterclass Lessons -->
+        <section id="tab-lessons" class="tab-pane">
+            <div id="lessonsContainer"></div>
+        </section>
+
+    </main>
+
+    <!-- Application Bootstrap (ES6 Modules) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
