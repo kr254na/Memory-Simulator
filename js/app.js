@@ -38,6 +38,24 @@ class MemSimApp {
                 this.switchTab(targetTab);
             });
         });
+
+        // Enable footer navigation links to smoothly switch tabs and scroll up
+        const footerLinks = document.querySelectorAll('.footer-nav-link');
+        footerLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const targetTab = link.getAttribute('data-tab');
+                if (targetTab) {
+                    this.switchTab(targetTab);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('footerBackToTop');
+        backToTopBtn?.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     }
 
     switchTab(tabId) {
